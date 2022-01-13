@@ -22,6 +22,7 @@ class HomePage():
         # self.driver.get("https://www.bayut.com/")
 
         self.driver.find_element_by_xpath(self.location_input_textbox_xpath).send_keys(location)
+        self.driver.implicitly_wait(.5)
 
         self.driver.find_element_by_xpath(self.location_input_textbox_xpath).send_keys(Keys.ENTER)
 
@@ -43,6 +44,6 @@ class HomePage():
 if __name__ == "__main__":
     newTest = HomePage(webdriver.Chrome("chromedriver.exe"))
 
-    newTest.inputLocation("Dubai")
+    newTest.inputLocation("Dubai Marina")
     newTest.selectPurpose("Buy")
     newTest.clickFind()
