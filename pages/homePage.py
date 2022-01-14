@@ -15,11 +15,10 @@ class HomePage():
 
     def __init__(self,driver):
         self.driver = driver
-        # self.driver.get("https://www.bayut.com")
+        self.driver.get("https://www.bayut.com")
     def inputLocation(self,location):
         
 
-        # self.driver.get("https://www.bayut.com/")
 
         self.driver.find_element_by_xpath(self.location_input_textbox_xpath).send_keys(location)
         self.driver.implicitly_wait(.5)
