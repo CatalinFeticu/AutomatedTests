@@ -4,29 +4,29 @@ import pages.searchPage
 import pages.homePage
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 import pytest
 
 
-class Test_LocationsAllPages:
+class LocationAllPages:
     def __init__(self,driverPath):
-        driverOptions = Options()
-        driverOptions.add_argument('log-level=3')
-        self.driver = webdriver.ChromeOptions(driverPath,driverOptions)
+        self.driver = webdriver.Chrome(driverPath)
         self.HomePage = pages.homePage.HomePage(self.driver)
         self.SearchPage = pages.searchPage.searchPage(self.driver)
+        self.driver.get("https://www.bayut.com")
 
-    def test_check_all_locations_on_all_pages(self,LocationToSearch):
+
+    def test_check_all_locations(self,LocationToSearch,checkAllPages = True):
         
         test = True
         failedLocation = None
+        pageArrow = True
+
         #homePage serach
         self.HomePage.inputLocation(LocationToSearch)
         self.HomePage.selectPurpose("Buy")
         self.HomePage.clickFind()
 
-        pageArrow = True
         while(pageArrow):
             WebDriverWait(self.driver,10).until(EC.presence_of_element_located(("xpath",self.SearchPage.article_location_xpath)))
             #property check for location
@@ -38,17 +38,19 @@ class Test_LocationsAllPages:
                     test = False
                     break
             pageArrow = self.SearchPage.checkIfNextButtonExists()
-            if pageArrow == True:
-                self.driver.execute_script("arguments[0].click();", self.driver.find_element_by_xpath(self.SearchPage.next_button))
+            if pageArrow == True and checkAllPages == True:
+                self.driver.execute_script("arguments[0].click();", self.driver.find_element_by_xpath(self.SearchPage.next_button_xpath))
+            if checkAllPages == False:
+                break
+        self.driver.quit()
+        return test
 
-        return test == True
-
-def test_hey():
-    a = Test_LocationsAllPages("chromedriver.exe")
-    assert a.test_check_all_locations_on_all_pages("Al Faseel Area") == True
+def test_locations_first_page():
+    a = LocationAllPages("chromedriver.exe")
+    assert a.test_check_all_locations("Dubai Marina",checkAllPages= False) == True
 
 
 if __name__ == "__main__":
-    a = Test_LocationsAllPages("chromedriver.exe")
-    a.test_check_all_locations_on_all_pages("Al Faseel Area")
+    a = LocationAllPages("chromedriver.exe")
+    a.test_check_all_locations("Dubai Marina",checkAllPages= True)
     pass

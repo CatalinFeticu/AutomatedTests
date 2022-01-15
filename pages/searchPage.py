@@ -4,9 +4,13 @@ from cgitb import text
 from selenium import webdriver
 
 class searchPage():
+    
     articles_xpath = "//li[@role='article']"
     article_location_xpath = "//div[@aria-label='Location']"
-    next_button = "//div[@title='Next']"
+    next_button_xpath = "//div[@title='Next']"
+    purpose_text_box_xpath = "//div[@aria-label='Purpose filter']/div/div/span/span"
+    property_type_text_xpath = "//label[text()='property type']/following-sibling::div/span/span"
+    location_text_xpath = "//span[@aria-label='Filter label']"
 
     def __init__(self,driver):
         self.driver = driver
@@ -21,7 +25,7 @@ class searchPage():
         return textList
 
     def checkIfNextButtonExists(self):
-        if len(self.driver.find_elements_by_xpath(self.next_button)) != 0:
+        if len(self.driver.find_elements_by_xpath(self.next_button_xpath)) != 0:
             return True
         return False
 
