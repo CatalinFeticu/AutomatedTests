@@ -13,10 +13,12 @@ class LocationAllPages():
         self.driver = webdriver.Chrome(driverPath)
         self.HomePage = pages.homePage.HomePage(self.driver)
         self.SearchPage = pages.searchPage.searchPage(self.driver)
-        self.driver.get("https://www.bayut.com")
 
 
     def test_check_all_locations(self,LocationToSearch,checkAllPages = True):
+
+        self.driver.get("https://www.bayut.com")
+
         
         test = True
         failedLocation = None
