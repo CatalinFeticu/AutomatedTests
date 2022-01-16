@@ -27,18 +27,20 @@ class PopularClassForTest():
         popularLinks = self.HomePage.getAllPopularLinkElementsOption(option)
         listLinks = popularLinks.find_elements_by_xpath(".//li//a")
         for link in listLinks:
-            textCheck = link.text
+            textCheck = "".join([e for e in link.text if e.isalnum()])
             href = link.get_attribute("href")
+            print(href)
             self.driver.execute_script(f"window.open('{href}');")
             self.driver.switch_to.window(self.driver.window_handles[1])
 
-            filterText = self.driver.find_element_by_xpath(self.SearchPage.location_text_xpath).text
+            filterText = "".join([e for e in self.driver.find_element_by_xpath(self.SearchPage.location_text_xpath).text if e.isalnum()])
 
             WebDriverWait(self.driver,10).until(EC.presence_of_element_located(("xpath",self.SearchPage.location_text_xpath)))
 
             if self.driver.find_element_by_xpath(self.SearchPage.purpose_text_box_xpath).text != option:
                 test = False
                 failedLink.append(textCheck)
+
             if textCheck not in filterText:
                 test = False
                 failedLink.append((filterText,textCheck))
@@ -49,10 +51,16 @@ class PopularClassForTest():
 
             self.driver.close()
             self.driver.switch_to.window(self.driver.window_handles[0])
-        self.driver.quit()
-        print(failedLink)
-        return test
 
+        self.driver.quit()
+        return test,failedLink
+
+
+
+def test_popular_apartments_links():
+    a = PopularClassForTest("chromedriver.exe")
+    test = a.test_all_links_popular_tab()
+    assert test[0] == True and test[1] == []
 
         # self.driver.quit()
 
