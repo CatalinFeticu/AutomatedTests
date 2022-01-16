@@ -13,6 +13,7 @@ class HomePage():
     popular_search_to_rent_button_xpath = "//div[text()='To Rent']"
     popular_search_to_for_sale_xpath = "//div[text()='For Sale']"
     popular_dubai_apartments_list_xpath_xpath = "//a[text()='Dubai Apartments']/parent::div/following-sibling::ul"
+    view_all_apartments_rent_button_xpath = "//body/div[@id='body-wrapper']/main/div/div[@aria-label='Popular properties']/div[@class='_2fddc99a']/div[@class='b2688814']/div[@class='fc910dcd']/div/div[1]/div[2]"
 
     def __init__(self,driver):
         self.driver = driver
@@ -34,9 +35,13 @@ class HomePage():
         self.driver.find_element_by_xpath(self.find_button_xpath).click()
 
     def clickPopularSearchOption(self,option):
-        self.driver.find_element_by_xpath(option).click()
+        if option == "Rent":
+            self.driver.find_element_by_xpath(self.popular_search_to_rent_button_xpath).click()
+        else:
+            self.driver.find_element_by_xpath(self.popular_search_to_rent_button_xpath).click()      
+
     def getAllPopularLinkElementsOption(self,option):
-        allPopularLinksList = self.driver.find_elements_by_xpath(self.HomePage.popular_dubai_apartments_list_xpath_xpath)
+        allPopularLinksList = self.driver.find_elements_by_xpath(self.popular_dubai_apartments_list_xpath_xpath)
         if option == "Rent":
             return allPopularLinksList[1]
         else:

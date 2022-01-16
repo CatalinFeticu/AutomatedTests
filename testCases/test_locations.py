@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0,'.//')
+sys.path.insert(0,r'./')
 import pages.searchPage
 import pages.homePage
 from selenium import webdriver
@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import pytest
 
 
-class LocationAllPages:
+class LocationAllPages():
     def __init__(self,driverPath):
         self.driver = webdriver.Chrome(driverPath)
         self.HomePage = pages.homePage.HomePage(self.driver)
@@ -22,14 +22,12 @@ class LocationAllPages:
         failedLocation = None
         pageArrow = True
 
-        #homePage serach
         self.HomePage.inputLocation(LocationToSearch)
         self.HomePage.selectPurpose("Buy")
         self.HomePage.clickFind()
 
         while(pageArrow):
             WebDriverWait(self.driver,10).until(EC.presence_of_element_located(("xpath",self.SearchPage.article_location_xpath)))
-            #property check for location
             articles = self.SearchPage.getLocationAllArticlesOnPage()
 
             for x in articles:
@@ -52,5 +50,5 @@ def test_locations_first_page():
 
 if __name__ == "__main__":
     a = LocationAllPages("chromedriver.exe")
-    a.test_check_all_locations("Dubai Marina",checkAllPages= True)
+    a.test_check_all_locations("Dubai Marina",checkAllPages= False)
     pass
