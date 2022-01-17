@@ -17,7 +17,6 @@ class HomePage():
 
     def __init__(self,driver):
         self.driver = driver
-        # self.driver.get("https://www.bayut.com")
 
     def inputLocation(self,location):
 
@@ -25,7 +24,6 @@ class HomePage():
         time.sleep(0.5)
         self.driver.find_element_by_xpath(self.location_input_textbox_xpath).send_keys(Keys.ENTER)
 
-        #For selectPurpose option should either be "Buy" or "Rent"
     def selectPurpose(self,option):
 
         self.driver.find_element_by_xpath(self.purpose_button_xpath).click()
