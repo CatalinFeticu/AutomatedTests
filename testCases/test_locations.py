@@ -5,12 +5,28 @@ import pages.homePage
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 import pytest
 
 
 class LocationAllPages():
-    def __init__(self,driverPath):
-        self.driver = webdriver.Chrome(driverPath)
+    def __init__(self,driverName):
+        if driverName == "Chrome":
+            from selenium.webdriver.chrome.service import Service
+            from selenium.webdriver.chrome.options import Options
+            option =  Options()
+            option.add_argument("--log-level=3")
+            chromeService = Service(ChromeDriverManager().install())
+            self.driver = webdriver.Chrome(service=chromeService,options=option)
+        if driverName == "FireFox":
+            from selenium.webdriver.firefox.service import Service
+            from selenium.webdriver.firefox.options import Options
+            option =  Options()
+            option.add_argument("--log-level=3")
+            firefoxService = Service(GeckoDriverManager().install())
+            self.driver = webdriver.Firefox(service = firefoxService,options = option)
+
         self.HomePage = pages.homePage.HomePage(self.driver)
         self.SearchPage = pages.searchPage.searchPage(self.driver)
 
@@ -19,7 +35,6 @@ class LocationAllPages():
 
         self.driver.get("https://www.bayut.com")
 
-        
         test = True
         failedLocation = None
         pageArrow = True
@@ -37,20 +52,24 @@ class LocationAllPages():
                     failedLocation = x
                     test = False
                     break
+
             pageArrow = self.SearchPage.checkIfNextButtonExists()
+
             if pageArrow == True and checkAllPages == True:
-                self.driver.execute_script("arguments[0].click();", self.driver.find_element_by_xpath(self.SearchPage.next_button_xpath))
+                self.SearchPage.clickNextButton()
+
             if checkAllPages == False:
                 break
+
         self.driver.quit()
         return test
 
 def test_locations_first_page():
-    a = LocationAllPages("chromedriver.exe")
+    a = LocationAllPages("Chrome")
     assert a.test_check_all_locations("Dubai Marina",checkAllPages= False) == True
 
 
 if __name__ == "__main__":
-    a = LocationAllPages("chromedriver.exe")
+    a = LocationAllPages("Chrome")
     a.test_check_all_locations("Dubai Marina",checkAllPages= False)
     pass
