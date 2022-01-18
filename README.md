@@ -1,8 +1,6 @@
 # Initial setup:
 
-Create a new virtual enviorment using: "mkvirtualenv venv"
+The project will need the following packages: selenium, pytest and webdriver-manager
 
-Make it active by using: "workon venv"
-
-Finally install all the required packages: "pip install -r requirements.txt"
+For ease run the following command: "pip install -r requirements.txt"
 
