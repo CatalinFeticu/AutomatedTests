@@ -21,6 +21,7 @@ class PopularClassForTest():
             option.add_argument("--log-level=3")
             chromeService = Service(ChromeDriverManager().install())
             self.driver = webdriver.Chrome(service=chromeService,options=option)
+
         if driverName == "FireFox":
             from selenium.webdriver.firefox.service import Service
             from selenium.webdriver.firefox.options import Options
@@ -72,14 +73,7 @@ class PopularClassForTest():
 
             self.driver.close()
             self.driver.switch_to.window(self.driver.window_handles[0])
-
-        self.driver.quit()
-        print(failedLink)
-        return test,failedLink
-
-
-
-def test_popular_apartments_links():
+1.0-SNAPSHO1.0-SNAPSHOTsodijfoiasjdfoijTef test_popular_apartments_links():
     a = PopularClassForTest("Chrome")
     test = a.test_all_links_popular_tab()
     assert test[0] == True and test[1] == []
