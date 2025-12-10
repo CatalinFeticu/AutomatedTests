@@ -10,6 +10,8 @@ JavaScript warning: https://pagead2.googlesyndication.com/bg/oCaBrhzCGlT5mvuc9Dz
 [Parent 6960, IPC I/O Parent] WARNING: pipe error: 232: file /builds/worker/checkouts/gecko/ipc/chromium/src/chrome/common/ipc_channel_win.cc:565
 JavaScript error: resource://gre/modules/Sqlite.jsm, line 1105: Error: Sqlite.jsm has been shutdown. Cannot open connection to: C:\Users\Catalin\AppData\Local\Temp\rust_mozprofileqSJCMV\protections.sqlite
 
+another commit
+
 ###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
 1642485309022	geckodriver	INFO	Listening on 127.0.0.1:65096
